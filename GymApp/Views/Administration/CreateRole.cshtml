@@ -1,0 +1,22 @@
+﻿@model GymApp.Models.CreateRoleModel
+
+<h4 class="text-md-center">Create Role</h4>
+<hr />
+<div class="row justify-content-md-center">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RoleName" class="control-label"></label>
+                <input asp-for="RoleName" class="form-control" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Create Role" class="btn btn-primary" />
+                <a asp-controller="Administration" asp-action="ListRoles" class="btn btn-danger text-white" style="text-decoration:none;">Back to List</a>
+
+            </div>
+        </form>
+    </div>
+</div>
+

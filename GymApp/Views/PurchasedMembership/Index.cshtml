@@ -1,0 +1,65 @@
+﻿@model GymApp.Models.PurchasedMembershipModel
+
+<h4 class="text-md-center">Confirm @ViewBag.name Purchase?</h4>
+<hr />
+<div class="row justify-content-md-center">
+    
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <p id="productName">Product: @ViewBag.name</p>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label">Start Date:</label>
+                <input id="StartDate" class="form-control" asp-for="StartDate"/>
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label">End Date:</label>
+                <input id="EndDate"  class="form-control" asp-for="EndDate" value="m"/>
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label">Price($):</label>
+                <input id="price" name="Amount" asp-for="Amount" class="form-control" type="text" value="@ViewBag.price"/>
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group invisible">
+                <label asp-for="MembershipTypeId" class="control-label"></label>
+                <input id="idForeignKey" asp-for="MembershipTypeId" value="@ViewBag.id"/>
+
+                <p id="durJs">@ViewBag.duration</p>
+            </div>
+            <div class="form-group text-center">
+                <input id="submitBtn" type="submit" value="Confirm" class="btn btn-primary" asp-action="Create"/>
+                <a asp-controller="MembershipType" asp-action="Index" class="btn btn-danger text-white" style="text-decoration:none;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    let startDate = document.getElementById("StartDate");
+    let endDate = document.getElementById("EndDate");
+   
+    let today = new Date();
+    startDate.setAttribute("value", today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear());
+    let duration = document.getElementById("durJs").innerHTML;
+    console.log(duration);
+    if (duration == "1 Month") {
+        let endDateVal = today.getMonth() + 1;
+        endDate.setAttribute("value", today.getDate() + '/' + endDateVal + '/' + today.getFullYear())
+    } else {
+        let endDateValue = today.getFullYear() + 1;
+        endDate.setAttribute("value", today.getDate() + '/' + today.getMonth() + '/' + endDateValue);
+
+    }
+    
+</script>
+@section Scripts{
+    @{
+    <partial name="_ValidationScriptsPartial"/>
+    }
+}

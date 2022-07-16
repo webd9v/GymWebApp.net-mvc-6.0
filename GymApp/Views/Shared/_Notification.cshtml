@@ -1,0 +1,60 @@
+﻿@if (TempData["success"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style>
+        .toast-success {
+          background-color: #00ff00;
+        }
+        .toast-message a,
+        .toast-message label {
+          color: #000000;
+        }
+        .toast-message a:hover {
+          color: #555;
+          text-decoration: none;
+        }
+    </style>
+    <script type="text/javascript">
+        toastr.options = {
+          "closeButton": false,
+          "debug": false,
+          "newestOnTop": true,
+          "progressBar": false,
+          "positionClass": "toast-bottom-center",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+        toastr.success('@TempData["success"]');
+        
+    </script>
+}
+@if (TempData["error"] != null)
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style>
+        .toast-error {
+          background-color: #ff0000;
+        }
+        .toast-message a,
+        .toast-message label {
+          color: #000000;
+        }
+        .toast-message a:hover {
+          color: #555;
+          text-decoration: none;
+        }
+    </style>
+    <script type="text/javascript">
+        toastr.error('@TempData["error"]');
+    </script>
+}
