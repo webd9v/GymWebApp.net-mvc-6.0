@@ -2,6 +2,30 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Less Attitude, More Fitness!</h1>
+<div>
+    <h1 class="display-4 text-center">Less Attitude, More Fitness!</h1>
+    <hr />
+    <div style="display:grid;grid-template-columns:auto;padding:20px;padding-left:50px;padding-right:210px;column-gap:29px;">
+        <div style="display:grid;grid-template-columns:auto auto;padding:20px;column-gap:20px;">
+            <img src="~/lib/images/gymimg3.jpg" alt="img" style="width:350px;height:auto;"/>
+            <div>
+                <h2 class="card-title">PROUD TO BE THE FIRST FITNESS BRAND WITH THE WELL HEALTH-SAFETY RATING</h2>
+                <p style="margin-top:15px;">Gym confidently in our Well Health Safety Rated clubs!<br /><br />
+                    You’ll soon find a Well Health Safety Seal on the front door of every Planet Fitness club. 
+                    Backed by science and evaluated by third-party experts, this seal means you can run, curl, 
+                    lift, squat, press, walk and gym confidently in the Clean Thumb Club™</p>
+            </div>
+        </div>
+        <div style="display:grid;grid-template-columns:auto auto;padding:20px;column-gap:20px;margin-top:20px;">
+            <div style="padding-top:60px;padding-left:40px;">
+                <h2 class="card-title">ALL. THE. PERKS.</h2>
+                <p style="margin-top:15px;">With our membership, you can use any of our 2000+ 
+                    locations, bring a guest for free as much as you want, and relax in the exclusive Black 
+                    Card Spa!  Check out our memberships and find out the services we offer.</p>
+                <a class="btn btn-primary" asp-controller="MembershipType" asp-action="Index">Sign up today<i class="bi bi-chevron-right"></i></a>
+            </div>
+            <img src="~/lib/images/spa.jpeg" alt="img" style="width:350px;height:auto;"/>
+
+        </div>
+    </div>
 </div>

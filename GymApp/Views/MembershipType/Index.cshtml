@@ -8,29 +8,21 @@
     <h1 class="col-md-6 col mt-3">Membership Offers</h1>
     <form asp-action="ShowSearchResult" style="display:flex;justify-content:center;" class="col-md-6 col container">
 
+        
         <div class="form-group mr-2 mt-4 row">
-            <label for="SearchPhrase1" class="control-label col">Price: </label>
-            <select name="SearchPhrase1" class="form-control text-dark col">
-                <option value="All" selected>All</option>
-                <option value="$20+">$20+</option>
-                <option value="$100+">$100+</option>
+               
+                        <label for="durationFilter" class="control-label col">Duration: </label>
+                        <select name="durationFilter" class="form-control text-dark col">
+                            <option value="All" selected>All</option>
+                            <option value="1 Month">1 Month</option>
+                            <option value="1 Year">1 Year</option>
+                        </select>
+                    
 
-            </select>
-        </div>
-        <div class="form-group mr-2 mt-4 row">
-
-            <label for="SearchPhrase2" class="control-label col">Duration: </label>
-            <select name="SearchPhrase2" class="form-control text-dark col">
-                <option value="All" selected>All</option>
-                <option value="1 Month">1 Month</option>
-                <option value="2 Month">2 Month</option>
-
-            </select>
         </div>
         <div class="form-group mr-2 " >
-
-            <label for="SearchPhrase" class="control-label"></label>
-            <input name="SearchPhrase" class="form-control" />
+                    <label for="SearchPhrase" class="control-label"></label>
+                    <input name="SearchPhrase" class="form-control" />
         </div>
         <div class="form-group">
             <input type="submit" value="Search" class="btn btn-primary mt-4" />
@@ -39,17 +31,27 @@
     </div>
 </div>
 <div style="display:grid;grid-template-columns:auto;padding:20px;">
-    
-    @foreach(var obj in Model){
+    @if (Model.Any()) {
+        @foreach (var obj in Model) {
 
-    <div class="card mt-1 bg-dark text-white" style="width: contain;">
-      <div class="card-body">
-        <h5 id="nameMembershipType-@obj.Id" class="card-title">@obj.Name</h5>
-        <h6 class="card-subtitle mb-2 text-light" style="display:flex;"><p id="objPrice-@obj.Id">•@obj.Price$</p>• Lasts up to &nbsp;<p id="objDur-@obj.Id"> @obj.Duration</p></h6>
-        <p class="card-text">@obj.Description</p>
-        <a id="btn-@obj.Id" name="btnSelectMe" class="btn bg-primary text-light" asp-controller="PurchasedMembership" asp-action="Index" asp-all-route-data="@(new Dictionary<string, string> { { "id", obj.Id.ToString() },{"price",obj.Price.ToString()},{"Name",obj.Name.ToString()},{"duration",obj.Duration.ToString()}, })"><i class="bi bi-bag-check-fill"></i>&nbsp;Buy Now!</a>
-    
-      </div>
-    </div>
+            <div class="card mt-1 bg-dark text-white" style="width: contain;">
+                <div class="card-body">
+                    <h5 id="nameMembershipType-@obj.Id" class="card-title">@obj.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-light" style="display:flex;"><p id="objPrice-@obj.Id">•@obj.Price$</p>• Lasts up to &nbsp;<p id="objDur-@obj.Id"> @obj.Duration</p></h6>
+                    <p class="card-text">@obj.Description</p>
+                    <a id="btn-@obj.Id" name="btnSelectMe" class="btn bg-primary text-light" asp-controller="PurchasedMembership" asp-action="Index" asp-all-route-data="@(new Dictionary<string, string> { { "id", obj.Id.ToString() },{"price",obj.Price.ToString()},{"Name",obj.Name.ToString()},{"duration",obj.Duration.ToString()}, })"><i class="bi bi-bag-check-fill"></i>&nbsp;Buy Now!</a>
+
+                </div>
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="card bg-warning bg-gradient text-center">
+            <div class="card-header">
+                <h4 class="card-title">None of the available offers match what you're searching for!</h4>
+            </div>
+        </div>
     }
 </div>
