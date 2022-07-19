@@ -4,6 +4,8 @@ using GymApp.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
 
 namespace GymApp.Controllers
 {
@@ -13,9 +15,17 @@ namespace GymApp.Controllers
         private static string name;
         private static string duration;
         private static string price;
-        public PurchasedMembershipController(ApplicationDbContext db)
+
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
+
+
+        public PurchasedMembershipController(ApplicationDbContext db, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             _db = db;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+
         }
         [Authorize]
         public IActionResult Index(MembershipTypeModel myvar)
@@ -33,7 +43,7 @@ namespace GymApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(PurchasedMembershipModel purchasedMembership)
+        public async Task<IActionResult> Create(PurchasedMembershipModel purchasedMembership)
         {
             int diff = 0;
             int var1, var2;
@@ -166,7 +176,17 @@ namespace GymApp.Controllers
             }
             if (ModelState.IsValid)
             {
-                _db.PurchasedMemberships.Add(purchasedMembership);
+                var userInfo = await userManager.FindByNameAsync(User.Identity.Name);
+                var idUser = userInfo.Id;
+                PurchasedMembershipModel p1 = new PurchasedMembershipModel
+                {
+                    StartDate = purchasedMembership.StartDate,
+                    EndDate = purchasedMembership.EndDate,
+                    Amount = purchasedMembership.Amount,
+                    MembershipTypeId = purchasedMembership.MembershipTypeId,
+                    UserId = idUser
+                };
+                _db.PurchasedMemberships.Add(p1);
                 _db.SaveChanges();
                 TempData["success"] = "Membership Purchased Successfully!";
                 return RedirectToAction("Index", "MembershipType");

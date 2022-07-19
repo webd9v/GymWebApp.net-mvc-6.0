@@ -19,6 +19,33 @@ namespace GymApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("GymApp.Models.CreateRoleModel", b =>
+                {
+                    b.Property<string>("RoleName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RoleName");
+
+                    b.ToTable("CreateRoleModel");
+                });
+
+            modelBuilder.Entity("GymApp.Models.LoginModel", b =>
+                {
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("RememberMe")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Email");
+
+                    b.ToTable("LoginModel");
+                });
+
             modelBuilder.Entity("GymApp.Models.MembershipTypeModel", b =>
                 {
                     b.Property<int>("Id")
@@ -67,11 +94,49 @@ namespace GymApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MembershipTypeId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("PurchasedMemberships");
+                });
+
+            modelBuilder.Entity("GymApp.Models.RegisterModel", b =>
+                {
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConfirmPassword")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Email");
+
+                    b.ToTable("RegisterModel");
+                });
+
+            modelBuilder.Entity("GymApp.Models.UserRoleModel", b =>
+                {
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsSelected")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserID");
+
+                    b.ToTable("UserRoleModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -277,6 +342,10 @@ namespace GymApp.Migrations
                         .HasForeignKey("MembershipTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

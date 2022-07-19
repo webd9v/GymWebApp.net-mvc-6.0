@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -23,7 +24,10 @@ namespace GymApp.Models
         [ForeignKey("MembershipTypeModel")]
         public int MembershipTypeId { get; set; }
         public MembershipTypeModel MembershipTypeModel { get; set; }
-      
+        [ForeignKey("User")]
+        public string UserId { get; set; }
+        public IdentityUser User { get; set; }
+
 
     }
 }
